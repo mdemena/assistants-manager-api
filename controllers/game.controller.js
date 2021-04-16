@@ -2,7 +2,7 @@ const Game = require('../models/game.model');
 const mongoose = require('mongoose');
 class GameController {
 	static async get(id) {
-		return await Game.findById(id);
+		return await Game.findById(id).populate(['localTeam','visitTeam']);
 	}
 	static async set(game) {
 		const editItem = await Game.findByIdAndUpdate(game._id, game, {

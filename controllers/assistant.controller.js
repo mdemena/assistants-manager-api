@@ -2,7 +2,7 @@ const Assistant = require('../models/assistant.model');
 const mongoose = require('mongoose');
 class AssistantController {
 	static async get(id) {
-		return await Assistant.findById(id);
+		return await (await Assistant.findById(id)).populate([{path:'game', populate:['localTeam','visitTeam']},'team']);
 	}
 	static async set(assistant) {
 		const editItem = await Assistant.findByIdAndUpdate(assistant._id, assistant, {
@@ -10,11 +10,17 @@ class AssistantController {
 		});
 		return editItem;
 	}
-	static async addItem(assistant) {
-		const { game, team, assistantName, assistantID, assistantEmail, assistantPhone, playerName} = assistant;
-		return await AssistantController.add(game, team, assistantName, assistantID, assistantEmail, assistantPhone, playerName);
+	static async setState(_id, _status) {
+		const editItem = await Assistant.findByIdAndUpdate(_id, {status:_status}, {
+			new: true,
+		});
+		return editItem;
 	}
-	static async add(game, team, assistantName, assistantID, assistantEmail, assistantPhone, playerName) {
+	static async addItem(assistant) {
+		const { game, team, assistantName, assistantID, assistantEmail, assistantPhone, playerName, status} = assistant;
+		return await AssistantController.add(game, team, assistantName, assistantID, assistantEmail, assistantPhone, playerName, status);
+	}
+	static async add(game, team, assistantName, assistantID, assistantEmail, assistantPhone, playerName, status) {
 		const newItem = await Assistant.create({
             game,
             team,
@@ -22,7 +28,8 @@ class AssistantController {
             assistantID,
             assistantEmail,
             assistantPhone,
-            playerName
+            playerName,
+			status
         });
 		return newItem;
 	}
