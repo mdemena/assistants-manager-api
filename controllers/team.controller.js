@@ -11,12 +11,13 @@ class TeamController {
 		return editItem;
 	}
 	static async addItem(team) {
-		const { season, category, name } = team;
-		return await TeamController.add(season, category, name);
+		const { club, season, category, name } = team;
+		return await TeamController.add(club, season, category, name);
 	}
 	static async add(season, category, name) {
 		const newItem = await Team.create({
-            season,
+            club,
+			season,
 			category,
 			name
         });
@@ -25,6 +26,9 @@ class TeamController {
 	static async delete(id) {
 		const delItem = await Team.findByIdAndRemove(id);
 		return delItem;
+	}
+	static async listByClub(clubId) {
+		return await TeamController.list({'club._id':`${clubId}`});
 	}
 	static async list(filter) {
 		return await Team.find(filter);

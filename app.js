@@ -64,6 +64,9 @@ app.use('/api/auth', authRoute);
 const userRoute = require('./routes/user.routes');
 app.use('/api/users', userRoute);
 
+const teamRoute = require('./routes/team.routes');
+app.use('/api/teams', teamRoute);
+
 app.use((req, res, next) => {
 	res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

@@ -1,4 +1,5 @@
 const Assistant = require('../models/assistant.model');
+const ComunicationController = require('./comunication.controller');
 const mongoose = require('mongoose');
 class AssistantController {
 	static async get(id) {
@@ -14,6 +15,10 @@ class AssistantController {
 		const editItem = await Assistant.findByIdAndUpdate(_id, {status:_status}, {
 			new: true,
 		});
+		let stateSubject = `Inscripció ${editItem.status}!`;
+		let stateSufix = editItem.status === 'Acceptada' ? `l'accés serà habilitat 20 minuts abans de començar el partit i necessitarem el document de identitat amb el que us heu registrat per poder validar l'accés.`:`Esperem que en el proper partit ja s'hagi normalitzat la situació i no tinguem que limitar l'aforament.`;
+		let stateMessage = `Hola <strong>${editItem.assistantName}</strong>,<br/>La seva inscripció pel partit del proper <strong>${editItem.game.date}</strong> com acompanyant del jugadora/a <strong>${editItem.playerName}</strong> del equip <strong>${editItem.team.name}</strong> ha estat <strong>${editItem.status}</strong>.<br/>${stateSufix}<br/><br/>Moltes mercès.<br/><br/>Atentament,<br/><strong>Club Vòlei Sant Celoni</strong>`;
+		ComunicationController.add('email', 'Comunicació Volei Sant Celoni', 'comunicacio@voleisantceloni.cat', assistantName, assistantEmail, stateSubject, stateMessage, 'Assitència Partits', false);
 		return editItem;
 	}
 	static async addItem(assistant) {
@@ -31,6 +36,9 @@ class AssistantController {
             playerName,
 			status
         });
+		let addSubject = 'Rebuda la inscripció !';
+		let addMessage = `Hola <strong>${assistantName}</strong>,<br/>La seva inscripció pel partit del proper <strong>${game.date}</strong> com acompanyant del jugadora/a <strong>${playerName}</strong> del equip <strong>${team.name}</strong> ha estat registrada.<br/>En breus dies rebrà l'acceptació o no de la mateixa, es tractaran per ordre d'inscripció fins arribar a l'aforament permès.<br/><br/>Moltes mercès.<br/><br/>Atentament,<br/><strong>Club Vòlei Sant Celoni</strong>`;
+		ComunicationController.add('email', 'Comunicació Volei Sant Celoni', 'comunicacio@voleisantceloni.cat', assistantName, assistantEmail, addSubject, addMessage, 'Assitència Partits', false);
 		return newItem;
 	}
 	static async delete(id) {
