@@ -39,7 +39,7 @@ router.post('/', async (req, res, next) => {
 				event: event,
 			};
 
-			const newItem = await LocationController.addLocation(item);
+			const newItem = await LocationController.addItem(item);
 
 			res.status(200).json(newItem);
 		} catch (err) {

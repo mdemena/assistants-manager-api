@@ -1,10 +1,10 @@
 const express = require('express');
-const ClubController = require('../controllers/club.controller');
+const SeasonController = require('../controllers/season.controller');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const items = await ClubController.list();
+		const items = await SeasonController.list();
 		res.status(200).json(items);
 	} catch (err) {
 		res.status(500).json(err);
@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 });
 router.get('/:id', async (req, res, next) => {
 	try {
-		const item = await ClubController.get(req.params.id);
+		const item = await SeasonController.get(req.params.id);
 		res.status(200).json(item);
 	} catch (err) {
 		res.status(500).json(err);
@@ -20,21 +20,16 @@ router.get('/:id', async (req, res, next) => {
 });
 router.post('/', async (req, res, next) => {
 	if (req.isAuthenticated()) {
-		const {
-			name,
-			location,
-			website,
-			email
-		} = req.body;
+		const { name, initDate, endDate, enabled } = req.body;
 		try {
 			const item = {
 				name,
-				location,
-				website,
-				email
+				initDate, 
+                endDate, 
+                enabled
 			};
 
-			const newItem = await ClubController.addItem(item);
+			const newItem = await SeasonController.addItem(item);
 
 			res.status(200).json(newItem);
 		} catch (err) {
@@ -46,16 +41,16 @@ router.post('/', async (req, res, next) => {
 });
 router.put('/:id', async (req, res, next) => {
 	if (req.isAuthenticated()) {
-		const { name, location, website, email } = req.body;
+		const { name, initDate, endDate, enabled } = req.body;
 		const item = {
 			_id: req.params.id,
-			name,
-			location,
-			website,
-			email
-		};
+            name,
+            initDate, 
+            endDate, 
+            enabled
+    };
 
-		const editItem = await ClubController.set(item);
+		const editItem = await SeasonController.set(item);
 
 		res.status(200).json(editItem);
 	} else {
@@ -65,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		if (req.isAuthenticated) {
-			const delItem = await ClubController.delete(req.params.id);
+			const delItem = await SeasonController.delete(req.params.id);
 			res.status(200).json(delItem);
 		} else {
 			res.status(500).json({ message: 'No estàs autenticat' });

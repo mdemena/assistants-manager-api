@@ -15,7 +15,7 @@ class LocationController {
 		);
 		return editLocation;
 	}
-	static async addLocation(location) {
+	static async addItem(location) {
 		const { name, address, formattedAddress, gpsLocation, event } = location;
 		return await LocationController.add(
 			name,

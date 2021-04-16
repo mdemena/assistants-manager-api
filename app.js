@@ -64,6 +64,15 @@ app.use('/api/auth', authRoute);
 const userRoute = require('./routes/user.routes');
 app.use('/api/users', userRoute);
 
+const locationRoute = require('./routes/location.routes');
+app.use('/api/locations', locationRoute);
+
+const clubRoute = require('./routes/club.routes');
+app.use('/api/clubs', clubRoute);
+
+const seasonRoute = require('./routes/season.routes');
+app.use('/api/seasons', seasonRoute);
+
 const teamRoute = require('./routes/team.routes');
 app.use('/api/teams', teamRoute);
 
