@@ -1,5 +1,4 @@
 const Location = require('../models/location.model');
-const EventController = require('../controllers/event.controller');
 const mongoose = require('mongoose');
 class LocationController {
 	static async get(id) {

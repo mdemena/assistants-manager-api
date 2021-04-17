@@ -1,4 +1,5 @@
 const Club = require('../models/club.model');
+const LocationController = require('../controllers/location.controller');
 const mongoose = require('mongoose');
 class ClubController {
 	static async get(id) {

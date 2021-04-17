@@ -1,10 +1,10 @@
 const express = require('express');
-const ClubController = require('../controllers/club.controller');
+const CategoryController = require('../controllers/category.controller');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const items = await ClubController.list();
+		const items = await CategoryController.list();
 		res.status(200).json(items);
 	} catch (err) {
 		res.status(500).json(err);
@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 });
 router.get('/:id', async (req, res, next) => {
 	try {
-		const item = await ClubController.get(req.params.id);
+		const item = await CategoryController.get(req.params.id);
 		res.status(200).json(item);
 	} catch (err) {
 		res.status(500).json(err);
@@ -21,28 +21,14 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	if (req.isAuthenticated()) {
 		const {
-			name,
-			locationAddress,
-			locationFormattedAddress,
-			locationCoordinatesLng,
-			locationCoordinatesLat,
-			website,
-			email
+			name
 		} = req.body;
 		try {
 			const item = {
-				name: name,
-				location: {
-					address: locationAddress,
-					formattedAddress: locationFormattedAddress,
-					gpsLocation: {
-						coordinates: [locationCoordinatesLng, locationCoordinatesLat],
-					},
-				},
-				website: website,
-				email: email
-			};
-			const newItem = await ClubController.addItem(item);
+				name
+            };
+
+			const newItem = await CategoryController.addItem(item);
 
 			res.status(200).json(newItem);
 		} catch (err) {
@@ -54,16 +40,13 @@ router.post('/', async (req, res, next) => {
 });
 router.put('/:id', async (req, res, next) => {
 	if (req.isAuthenticated()) {
-		const { name, location, website, email } = req.body;
+		const { name } = req.body;
 		const item = {
 			_id: req.params.id,
-			name,
-			location,
-			website,
-			email
+			name
 		};
 
-		const editItem = await ClubController.set(item);
+		const editItem = await CategoryController.set(item);
 
 		res.status(200).json(editItem);
 	} else {
@@ -73,7 +56,7 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		if (req.isAuthenticated) {
-			const delItem = await ClubController.delete(req.params.id);
+			const delItem = await CategoryController.delete(req.params.id);
 			res.status(200).json(delItem);
 		} else {
 			res.status(500).json({ message: 'No estàs autenticat' });

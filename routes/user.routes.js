@@ -1,7 +1,7 @@
 const express = require('express');
 const UserController = require('../controllers/user.controller');
-const router = express.Router();
 const uploadCloud = require('../configs/cloudinary.config.js');
+const router = express.Router();
 
 router.get('/', async (req, res, next) => {
 	try {

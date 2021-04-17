@@ -1,8 +1,9 @@
 require('dotenv').config();
 
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const formData = require("express-form-data");
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const path = require('path');
@@ -30,8 +31,9 @@ app.use(
 	})
 );
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(formData.parse());
 app.use(cookieParser());
 
 // Express View engine setup
