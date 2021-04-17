@@ -27,11 +27,16 @@ class TeamController {
 		const delItem = await Team.findByIdAndRemove(id);
 		return delItem;
 	}
-	static async listByClub(clubId) {
-		return await TeamController.list({'club._id':`${clubId}`});
+	static async listBySeason(club, season) {
+		const filter = {season}
+		return await TeamController.list(filter);
+	}
+	static async listByClub(club) {
+		const filter = {club}
+		return await TeamController.list(filter);
 	}
 	static async list(filter) {
-		return await Team.find(filter);
+		return await Team.find(filter).sort('name');
 	}
 }
 module.exports = TeamController;

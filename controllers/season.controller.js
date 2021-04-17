@@ -10,13 +10,26 @@ class SeasonController {
 		});
 		return editItem;
 	}
-	static async addItem(season) {
-		const { name, initDate, endDate, enabled } = season;
-		return await SeasonController.add(name, initDate, endDate, enabled);
+	static async enable(id) {
+		const editItem = await Season.findByIdAndUpdate(id, { enabled:true }, {
+			new: true,
+		});
+		return editItem;
 	}
-	static async add(name, initDate, endDate, enabled) {
+	static async disable(id) {
+		const editItem = await Season.findByIdAndUpdate(id, { enabled:false }, {
+			new: true,
+		});
+		return editItem;
+	}
+	static async addItem(season) {
+		const { club, name, initDate, endDate, enabled } = season;
+		return await SeasonController.add(club, name, initDate, endDate, enabled);
+	}
+	static async add(club, name, initDate, endDate, enabled) {
 		const newItem = await Season.create({
-            name,
+			club,
+			name,
             initDate,
             endDate,
             enabled
@@ -27,8 +40,12 @@ class SeasonController {
 		const delItem = await Season.findByIdAndRemove(id);
 		return delItem;
 	}
+	static async listByClub(club) {
+		const filter = { club };
+		return await SeasonController.list(filter);
+	}
 	static async list(filter) {
-		return await Season.find(filter);
+		return await Season.find(filter).sort('name');
 	}
 }
 module.exports = SeasonController;

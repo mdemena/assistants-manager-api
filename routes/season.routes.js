@@ -10,6 +10,14 @@ router.get('/', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/club/:id', async (req, res, next) => {
+	try {
+		const items = await SeasonController.listByClub(req.params.id);
+		res.status(200).json(items);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.get('/:id', async (req, res, next) => {
 	try {
 		const item = await SeasonController.get(req.params.id);
@@ -18,11 +26,28 @@ router.get('/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/enable/:id', async (req, res, next) => {
+	try {
+		const items = await SeasonController.enable(req.params.id);
+		res.status(200).json(items);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+router.get('/disable/:id', async (req, res, next) => {
+	try {
+		const items = await SeasonController.disable(req.params.id);
+		res.status(200).json(items);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.post('/', async (req, res, next) => {
 	if (req.isAuthenticated()) {
-		const { name, initDate, endDate, enabled } = req.body;
+		const { club, name, initDate, endDate, enabled } = req.body;
 		try {
 			const item = {
+				club,
 				name,
 				initDate, 
                 endDate, 

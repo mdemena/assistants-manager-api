@@ -10,6 +10,14 @@ router.get('/', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/club/:id', async (req, res, next) => {
+	try {
+		const items = await CategoryController.listByClub(req.params.id);
+		res.status(200).json(items);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.get('/:id', async (req, res, next) => {
 	try {
 		const item = await CategoryController.get(req.params.id);
@@ -21,10 +29,12 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	if (req.isAuthenticated()) {
 		const {
+			club,
 			name
 		} = req.body;
 		try {
 			const item = {
+				club,
 				name
             };
 

@@ -18,6 +18,14 @@ router.get('/club/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/season/:id', async (req, res, next) => {
+	try {
+		const items = await TeamController.listBySeason(req.params.id);
+		res.status(200).json(items);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.get('/:id', async (req, res, next) => {
 	try {
 		const item = await TeamController.get(req.params.id);

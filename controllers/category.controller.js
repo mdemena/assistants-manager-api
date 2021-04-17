@@ -2,7 +2,7 @@ const Category = require('../models/category.model');
 const mongoose = require('mongoose');
 class CategoryController {
 	static async get(id) {
-		return await Season.findById(id);
+		return await Category.findById(id);
 	}
 	static async set(category) {
 		const editItem = await Category.findByIdAndUpdate(category._id, category, {
@@ -11,12 +11,13 @@ class CategoryController {
 		return editItem;
 	}
 	static async addItem(category) {
-		const { name } = category;
-		return await CategoryController.add(name);
+		const { club, name } = category;
+		return await CategoryController.add(club, name);
 	}
-	static async add(name) {
+	static async add(club, name) {
 		const newItem = await Category.create({
-            name
+			club,
+			name
         });
 		return newItem;
 	}
@@ -24,8 +25,12 @@ class CategoryController {
 		const delItem = await Category.findByIdAndRemove(id);
 		return delItem;
 	}
+	static async listByClub(club) {
+		const filter = { club };
+		return await CategoryController.list(filter);
+	}
 	static async list(filter) {
-		return await Category.find(filter);
+		return await Category.find(filter).sort('name');
 	}
 }
 module.exports = CategoryController;
