@@ -9,7 +9,7 @@ const assistantSchema = new mongoose.Schema(
 		assistantEmail: { type: String, required: true },
 		assistantPhone: { type: String, required: true },
 		playerName: { type: String, required: true },
-		status: { type: String, required: true, enum:['Pendent','Denegada','Acceptada'], default:'Pendent' },
+		status: { type: String, enum:['Pendent','Denegada','Acceptada'], default:'Pendent', required: true },
 	},
 	{ timestamps: true }
 );

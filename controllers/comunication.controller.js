@@ -1,6 +1,6 @@
 const Comunication = require('../models/comunication.model');
 const mongoose = require('mongoose');
-const SibApiV3Sdk = require('sib-api-v3-sdk');
+const nodemailer = require('nodemailer');
 class ComunicationController {
 	static async get(id) {
 		return await (await Comunication.findById(id)).populate(['Assistant','Game']);
@@ -28,6 +28,8 @@ class ComunicationController {
             sended
             });
 		
+		this.sendComunicaction(newItem);
+		
 		return newItem;
 	}
 	static async delete(id) {
@@ -46,27 +48,20 @@ class ComunicationController {
 			case 'sms':
 				break;
 			default:
-				let emailClient = SibApiV3Sdk.ApiClient.instance;
-				// Instantiate the client
-				let emailApiKey = emailClient.authentications.apiKey .authentications['api-key'];
-				emailApiKey.apiKey = process.env.SENDINBLUE_API_KEY;
-				var emailApiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-				var emailEmail = new SibApiV3Sdk.SendSmtpEmail();
-				// Define the campaign settings
-				//emailEmail.name = comunication.campaign;
-				emailEmail.subject = comunication.subject;
-				emailEmail.sender = {"name": comunication.fromName, "email":comunication.from};
-				emailEmail.replyTo = {"name": comunication.fromName, "email":comunication.from};
-				emailEmail.type = "classic";
-				emailEmail.htmlContent = comunication.message;
-				emailEmail.to = {"name": comunication.toName, "email": comunication.to};
-
-				//Make the call to the client
-				emailApiInstance.sendTransacEmail(emailEmail).then(function(data) {
-					console.log('API called successfully. Returned data: ' + data);
-				}, function(error) {
-					console.error(error);
+				let transporter = nodemailer.createTransport({
+					service: 'Gmail',
+					auth: {
+						user: process.env.GMAIL_USER,
+						pass: process.env.GMAIL_PASS 
+					}
 				});
+				transporter.sendMail({
+					from: `"${comunication.fromName}" <${comunication.from}>`,
+					to: `"${comunication.toName}" <${comunication.to}>`,
+					subject: comunication.subject, 
+  					// text: 'Awesome Message',
+					html: comunication.message
+				}).then(info => console.log(info)).catch(error => console.log(error));
 				break;
 		}
 	}

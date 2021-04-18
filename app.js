@@ -78,6 +78,15 @@ app.use('/api/categories', categoryRoute);
 const teamRoute = require('./routes/team.routes');
 app.use('/api/teams', teamRoute);
 
+const gameRoute = require('./routes/game.routes');
+app.use('/api/games', gameRoute);
+
+const assistantRoute = require('./routes/assistant.routes');
+app.use('/api/assistants', assistantRoute);
+
+const comunicationRoute = require('./routes/comunication.routes');
+app.use('/api/comunications', comunicationRoute);
+
 app.use((req, res, next) => {
 	res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

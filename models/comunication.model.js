@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const comunCcationSchema = new mongoose.Schema(
+const comunicationSchema = new mongoose.Schema(
 	{
 		type: { type: String, required: true, enum:['email','sms','call','whastapp','telegram'] },
 		fromName: { type: String, required: true},
