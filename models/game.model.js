@@ -6,9 +6,12 @@ const gameSchema = new mongoose.Schema(
 		category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
 		localTeam: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', required: true },
 		visitTeam: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', required: true },
+		setsLocalTeam:{ type: Number },
+		setsVisitTeam: { type: Number },
+		sets: [{ name: {type:String}, localTeamPoints: { type: Number }, visitTeamPoints:{ type: Number }}],
         date: { type: Date, required: true },
         location: { type: String, required: true },
-		enabled: { type: Boolean, default: true, required: true }
+		status: { type: String, default: 'Planificado', required: true, enum:['Planificado','En Juego','Terminado','Aplazado'] }
 	},
 	{ timestamps: true }
 );

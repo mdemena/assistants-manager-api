@@ -49,19 +49,25 @@ router.post('/', async (req, res, next) => {
 			category,
             localTeam,
             visitTeam,
+			setsLocalTeam,
+			setsVisitTeam,
+			sets,
             date,
             location,
-            enabled
+            status
 		} = req.body;
 		try {
 			const item = {
                 season,
                 category,
                 localTeam,
-                visitTeam,
+				visitTeam,
+				setsLocalTeam,
+				setsVisitTeam,
+				sets,
                 date,
                 location,
-                enabled
+                status
 			};
 
 			const newItem = await GameController.addItem(item);
@@ -76,16 +82,19 @@ router.post('/', async (req, res, next) => {
 });
 router.put('/:id', async (req, res, next) => {
 	if (req.isAuthenticated()) {
-		const { season, category, localTeam, visitTeam, date, location, enabled } = req.body;
+		const { season, category, localTeam, visitTeam, setsLocalTeam, setsVisitTeam, sets, date, location, status } = req.body;
 		const item = {
 			_id: req.params.id,
             season,
             category,
             localTeam,
-            visitTeam,
+			visitTeam,
+			setsLocalTeam,
+			setsVisitTeam,
+			sets,
             date,
             location,
-            enabled
+            status
 		};
 
 		const editItem = await GameController.set(item);

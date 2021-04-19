@@ -11,18 +11,21 @@ class GameController {
 		return editItem;
 	}
 	static async addItem(game) {
-		const { season, category, localTeam, visitTeam, date, location, enabled } = game;
-		return await GameController.add(season, category, localTeam, visitTeam, date, location, enabled);
+		const { season, category, localTeam, visitTeam, setsLocalTeam, setsVisitTeam, sets, date, location, status } = game;
+		return await GameController.add(season, category, localTeam, visitTeam, setsLocalTeam, setsVisitTeam, sets, date, location, status);
 	}
-	static async add(season, category, localTeam, visitTeam, date, location, enabled) {
+	static async add(season, category, localTeam, visitTeam, setsLocalTeam, setsVisitTeam, sets, date, location, status) {
 		const newItem = await Game.create({
             season,
 			category,
 			localTeam, 
             visitTeam, 
-            date, 
-            location, 
-            enabled
+			setsLocalTeam,
+			setsVisitTeam,
+			sets,
+            date,
+            location,
+            status
         });
 		return newItem;
 	}
