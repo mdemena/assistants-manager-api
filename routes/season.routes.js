@@ -66,9 +66,10 @@ router.post('/', async (req, res, next) => {
 });
 router.put('/:id', async (req, res, next) => {
 	if (req.isAuthenticated()) {
-		const { name, initDate, endDate, enabled } = req.body;
+		const { club, name, initDate, endDate, enabled } = req.body;
 		const item = {
 			_id: req.params.id,
+			club,
             name,
             initDate, 
             endDate, 
