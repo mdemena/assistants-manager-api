@@ -56,10 +56,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // default value for title local
-app.locals.title = 'API - Assitants Manager !!';
+app.locals.title = 'API - Assistants Manager !!';
 
 const index = require('./routes/index.routes');
 app.use('/', index);
+
+const indexAPI = require('./routes/index.routes');
+app.use('/api', indexAPI);
 
 const authRoute = require('./routes/auth.routes');
 app.use('/api/auth', authRoute);
