@@ -63,12 +63,12 @@ router.post('/signup', async (req, res, next) => {
 		});
 		return;
 	}
-	let foundUser = await UserController.checkUsername(username);
+	let foundUser = await UserController.existUsername(username);
 	if (foundUser) {
 		res.status(406).json({ message: 'Usuari existent. Utilitza un altre.' });
 		return;
 	} else {
-		foundUser = await UserController.checkEmail(email);
+		foundUser = await UserController.existEmail(email);
 		if (foundUser) {
 			res.status(406).json({ message: 'Correu existent. Utilitza un altre.' });
 			return;
@@ -113,9 +113,9 @@ router.post('/loggedin', (req, res, next) => {
 	}
 	res.status(403).json({ message: 'No autoritzat' });
 });
-router.post('/checkemail', async (req, res, next) => {
+router.post('/existemail', async (req, res, next) => {
 	try {
-		const exist = await UserController.checkEmail(req.body.email);
+		const exist = await UserController.existEmail(req.body.email);
 		console.log(exist);
 		if (exist) {
 			res.status(200).json(exist);
@@ -126,9 +126,9 @@ router.post('/checkemail', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
-router.post('/checkusername', async (req, res, next) => {
+router.post('/existusername', async (req, res, next) => {
 	try {
-		const exist = await UserController.checkUsername(req.body.username);
+		const exist = await UserController.existUsername(req.body.username);
 
 		if (exist) {
 			res.status(200).json(exist);

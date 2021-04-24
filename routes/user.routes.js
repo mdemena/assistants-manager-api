@@ -27,7 +27,7 @@ router.put('/', uploadCloud.single('imageAvatar'), async (req, res, next) => {
 			name: req.body.name,
 			email: req.body.email,
 		};
-		let foundUser = await UserController.checkUsernameDifferentUser(
+		let foundUser = await UserController.existUsernameDifferentUser(
 			user.username,
 			user._id
 		);
@@ -35,7 +35,7 @@ router.put('/', uploadCloud.single('imageAvatar'), async (req, res, next) => {
 			res.status(400).json({ message: 'Usuari existent. Utilitza un altre.' });
 			return;
 		} else {
-			foundUser = await UserController.checkEmailDifferentUser(
+			foundUser = await UserController.existEmailDifferentUser(
 				user.email,
 				user._id
 			);
@@ -85,7 +85,7 @@ router.patch(
 );
 router.post('/checkemail', async (req, res, next) => {
 	try {
-		let exist = await UserController.checkEmailDifferentUser(
+		let exist = await UserController.existEmailDifferentUser(
 			req.body.email,
 			req.body.id
 		);
@@ -100,7 +100,7 @@ router.post('/checkemail', async (req, res, next) => {
 });
 router.post('/checkusername', async (req, res, next) => {
 	try {
-		let exist = await UserController.checkUsernameDifferentUser(
+		let exist = await UserController.existUsernameDifferentUser(
 			req.body.username,
 			req.body.id
 		);

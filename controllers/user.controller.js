@@ -50,18 +50,18 @@ class UserController {
 	static async findByGoogleID(googleID) {
 		return await User.findOne({ googleID });
 	}
-	static async checkEmail(email) {
+	static async existEmail(email) {
 		return await User.findOne({ email });
 	}
-	static async checkEmailDifferentUser(email, id) {
+	static async existEmailDifferentUser(email, id) {
 		return await User.findOne({
 			$and: [{ email: { $eq: email } }, { _id: { $ne: id } }],
 		});
 	}
-	static async checkUsername(username) {
+	static async existUsername(username) {
 		return await User.findOne({ username });
 	}
-	static async checkUsernameDifferentUser(username, id) {
+	static async existUsernameDifferentUser(username, id) {
 		return await User.findOne({
 			$and: [{ username: { $eq: username } }, { _id: { $ne: id } }],
 		});
