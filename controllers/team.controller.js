@@ -39,10 +39,7 @@ class TeamController {
 		return await this.list(filter);
 	}
 	static async listByClub(club) {
-		// const filter = { season:{club:{_id:clubId}}};
-		// return await this.list(filter);
 		const items = await Team.find().populate({path:'season', match:{club:club}});
-		// console.log('Query: ',items.)
 		return items;
 	}
 	static async list(filter) {
@@ -53,16 +50,13 @@ class TeamController {
 		return await this.getNameByTeam(item)
 	}
 	static async getNameByTeam(team) {
-		// console.log('team: ', team);
 		return await this.getName(team.club, team.season, team.category)
 	}
 	static async getName(club, season, category) {
-		// console.log('club: ',club,'season: ', season,'category: ', category);
 		const clubTmp = await ClubController.get(club);
 		const categoryTmp = await CategoryController.get(category);
 		const seasonTmp = await SeasonController.get(season);
 
-		// console.log('clubTmp: ',clubTmp,'seasonTmp: ', seasonTmp,'categoryTmp: ', categoryTmp);
 		return categoryTmp.name + ' ' + clubTmp.name + ' ' + seasonTmp.name;
 	}
 }

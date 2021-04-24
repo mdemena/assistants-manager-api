@@ -108,7 +108,6 @@ router.post('/logout', (req, res, next) => {
 router.post('/loggedin', (req, res, next) => {
 	if (req.isAuthenticated()) {
 		res.status(200).json(req.user);
-		//res.status(200).json({ message: 'Usuari autenticat' });
 		return;
 	}
 	res.status(403).json({ message: 'No autoritzat' });
