@@ -40,7 +40,6 @@ passport.use(
 				})
 				.catch((err) => {
 					next(err);
-					return;
 				});
 		}
 	)
@@ -61,7 +60,6 @@ passport.use(
 				.then((foundUser) => {
 					if (foundUser) {
 						done(null, foundUser);
-						return;
 					}
 
 					UserController.findByEmail(profile.emails[0].value).then(
@@ -101,7 +99,6 @@ passport.use(
 				})
 				.catch((err) => {
 					done(err);
-					return;
 				});
 		}
 	)

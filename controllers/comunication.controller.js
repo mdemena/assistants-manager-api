@@ -53,7 +53,9 @@ class ComunicationController {
 					auth: {
 						user: process.env.GMAIL_USER,
 						pass: process.env.GMAIL_PASS 
-					}
+					},
+					secure: true, // Sensitive
+					requireTLS: true // Sensitive
 				});
 				transporter.sendMail({
 					from: `"${comunication.fromName}" <${comunication.from}>`,
