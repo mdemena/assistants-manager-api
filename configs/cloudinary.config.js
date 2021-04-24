@@ -18,4 +18,4 @@ const storage = new CloudinaryStorage({
 	},
 });
 
-module.exports = multer({ storage: storage, limits: {fileSize: 10000000 } });
+module.exports = multer({ storage: storage, limits: {fileSize: 8000000 } });
