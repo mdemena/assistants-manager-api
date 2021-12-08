@@ -9,11 +9,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Social Sport Manager'],
+  app_name: process.env.NEW_RELIC_APP_NAME,
   /**
    * Your New Relic license key.
    */
-  license_key: 'e228ad206b1422153cdee75892a9e31b3db75447',
+  license_key: process.env.NEW_RELIC_LICENSE,
   /**
    * This setting controls distributed tracing.
    * Distributed tracing lets you see the path that a request takes through your
