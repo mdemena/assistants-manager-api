@@ -87,7 +87,7 @@ router.post('/checkemail', async (req, res, next) => {
 	try {
 		let exist = await UserController.existEmailDifferentUser(
 			req.body.email,
-			req.body.id
+			req.user._id
 		);
 		if (exist) {
 			res.status(200).json(exist);
@@ -102,7 +102,7 @@ router.post('/checkusername', async (req, res, next) => {
 	try {
 		let exist = await UserController.existUsernameDifferentUser(
 			req.body.username,
-			req.body.id
+			req.user._id
 		);
 		if (exist) {
 			res.status(200).json(exist);
