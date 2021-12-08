@@ -2,14 +2,15 @@ const express = require('express');
 const SeasonController = require('../controllers/season.controller');
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
-	try {
-		const items = await SeasonController.list();
-		res.status(200).json(items);
-	} catch (err) {
-		res.status(500).json(err);
-	}
-});
+// No veo la practicidad una lista de temporadas de todos los Clubs.
+// router.get('/', async (req, res, next) => {
+// 	try {
+// 		const items = await SeasonController.list();
+// 		res.status(200).json(items);
+// 	} catch (err) {
+// 		res.status(500).json(err);
+// 	}
+// });
 router.get('/club/:id', async (req, res, next) => {
 	try {
 		const items = await SeasonController.listByClub(req.params.id);

@@ -14,6 +14,7 @@ const app = express();
 require('./configs/db.config');
 require('./configs/passport.config');
 require('./configs/session.config')(app);
+require('./configs/newrelic.config');
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(

@@ -10,6 +10,7 @@ router.get('/', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+
 router.get('/:id', async (req, res, next) => {
 	try {
 		const item = await ClubController.get(req.params.id);
@@ -37,7 +38,7 @@ router.post('/', async (req, res, next) => {
 					formattedAddress: locationFormattedAddress,
 					gpsLocation: {
 						coordinates: [locationCoordinatesLng, locationCoordinatesLat],
-					},
+					}
 				},
 				website: website,
 				email: email
